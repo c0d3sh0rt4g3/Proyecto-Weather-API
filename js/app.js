@@ -18,7 +18,7 @@ const getApiData = (city, country) =>{
                         &appid=3b2fa0825392ef439f6265ce4c7c5987`
     fetch(url)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => showWeatherOnHtml(data))
         .catch((error) => console.error(error))
 }
 
@@ -53,7 +53,14 @@ const enableSubmitBtn = (qualifiedName, value) =>{
 }
 
 const showWeatherOnHtml = (weatherData) =>{
-    const maxTemp = kelvinToCelsiusConverter(weatherData.main.max)
+    const momentTemp = kelvinToCelsiusConverter(weatherData.main.temp).toFixed(2)
+    const maxTemp = kelvinToCelsiusConverter(weatherData.main.temp_max).toFixed(2)
+    const minTemp = kelvinToCelsiusConverter(weatherData.main.temp_min).toFixed(2)
+    const cityName = weatherData.name
+    result.innerHTML = `<h2 class="text-3xl mt-5 text-white font-bold uppercase text-center">${cityName}</h2>
+                        <p class="text-2xl mt-5 text-white font-bold">Temperatura: ${momentTemp}ºC</p>
+                        <p class="text-1xl mt-5 text-white font-bold">Maxima: ${maxTemp}ºC</p>
+                        <p class="text-1xl mt-5 text-white font-bold">Minima: ${minTemp}ºC</p>`
 }
 
 const kelvinToCelsiusConverter = (kelvinTemperature) => {
