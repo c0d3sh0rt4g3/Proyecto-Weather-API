@@ -1,3 +1,5 @@
+const token = "3b2fa0825392ef439f6265ce4c7c5987"
+
 const form = document.querySelector("#formulario")
 const cityField = document.querySelector("#ciudad")
 const countryField = document.querySelector("#pais")
@@ -15,7 +17,7 @@ const validate = (e) =>{
 
 const getApiData = (city, country) =>{
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}\`
-                        &appid=3b2fa0825392ef439f6265ce4c7c5987`
+                        &appid=${token}`
     fetch(url)
         .then(response => response.json())
         .then(data => showWeatherOnHtml(data))
@@ -53,9 +55,10 @@ const enableSubmitBtn = (qualifiedName, value) =>{
 }
 
 const showWeatherOnHtml = (weatherData) =>{
-    const momentTemp = kelvinToCelsiusConverter(weatherData.main.temp).toFixed(2)
-    const maxTemp = kelvinToCelsiusConverter(weatherData.main.temp_max).toFixed(2)
-    const minTemp = kelvinToCelsiusConverter(weatherData.main.temp_min).toFixed(2)
+    console.log(weatherData)
+    const momentTemp = Math.round(kelvinToCelsiusConverter(weatherData.main.temp))
+    const maxTemp = Math.round(kelvinToCelsiusConverter(weatherData.main.temp_max))
+    const minTemp = Math.round(kelvinToCelsiusConverter(weatherData.main.temp_min))
     const cityName = weatherData.name
     result.innerHTML = `<h2 class="text-3xl mt-5 text-white font-bold uppercase text-center">${cityName}</h2>
                         <p class="text-2xl mt-5 text-white font-bold">Temperatura: ${momentTemp}ºC</p>
